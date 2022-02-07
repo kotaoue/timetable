@@ -70,29 +70,38 @@ func (p *Processing) fillRect(x, y, width, height int) {
 	}
 }
 
-func (p *Processing) Circle(x, y, extent int) {
+func (p *Processing) Pie(x, y, extent int, startAngle, endAngle float64) {
 	if p.fillColor != nil {
-		p.fillCircle(x, y, extent)
+		p.fillPie(x, y, extent, startAngle, endAngle)
 	}
 	if p.strokeColor != nil {
-		p.noFillCircle(x, y, extent)
+		p.noFillPie(x, y, extent, startAngle, endAngle)
 	}
 }
 
-func (p *Processing) noFillCircle(x, y, extent int) {
+func (p *Processing) Circle(x, y, extent int) {
+	if p.fillColor != nil {
+		p.fillPie(x, y, extent, 0, 360)
+	}
+	if p.strokeColor != nil {
+		p.noFillPie(x, y, extent, 0, 360)
+	}
+}
+
+func (p *Processing) noFillPie(x, y, extent int, startAngle, endAngle float64) {
 	r := float64(extent / 2)
-	for ang := 0.0; ang < 360.0; ang += 0.1 {
-		i := int(float64(x) + r*math.Cos(ang))
-		j := int(float64(y) + r*math.Sin(ang))
+	for ang := startAngle; ang < endAngle; ang += 0.1 {
+		i := int(float64(x) + r*math.Cos(ang*math.Pi/180))
+		j := int(float64(y) + r*math.Sin(ang*math.Pi/180))
 		p.img.Set(i, j, p.strokeColor)
 	}
 }
 
-func (p *Processing) fillCircle(x, y, extent int) {
-	for ang := 0.0; ang < 360.0; ang += 0.1 {
+func (p *Processing) fillPie(x, y, extent int, startAngle, endAngle float64) {
+	for ang := startAngle; ang < endAngle; ang += 0.1 {
 		for r := 0.0; r < float64(extent/2); r++ {
-			i := int(float64(x) + r*math.Cos(ang))
-			j := int(float64(y) + r*math.Sin(ang))
+			i := int(float64(x) + r*math.Cos(ang*math.Pi/180))
+			j := int(float64(y) + r*math.Sin(ang*math.Pi/180))
 			p.img.Set(i, j, p.fillColor)
 		}
 	}

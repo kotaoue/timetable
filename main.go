@@ -25,6 +25,12 @@ func main() {
 	prc.Fill(&color.RGBA{0, 0, 0, 255})
 	prc.Circle(150, (height / 2), 50)
 
+	prc.Fill(&color.RGBA{255, 0, 0, 255})
+	prc.Stroke(&color.RGBA{0, 0, 255, 255})
+	prc.Pie(75, (height / 2), 50, 0, 90)
+	prc.NoFill()
+	prc.Pie(75, (height / 2), 50, 90, 180)
+
 	f, _ := os.Create("image.png")
 	png.Encode(f, img)
 }
