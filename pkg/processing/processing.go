@@ -51,6 +51,14 @@ func (p *Processing) Rect(x, y, width, height int) {
 	}
 }
 
+func (p *Processing) fillRect(x, y, width, height int) {
+	for i := x; i < (width + x); i++ {
+		for j := y; j < (height + y); j++ {
+			p.img.Set(i, j, p.fillColor)
+		}
+	}
+}
+
 func (p *Processing) noFillRect(x, y, width, height int) {
 	for i := x; i < (x + width); i++ {
 		p.img.Set(i, y, p.strokeColor)
@@ -59,14 +67,6 @@ func (p *Processing) noFillRect(x, y, width, height int) {
 	for i := y; i < (y + height); i++ {
 		p.img.Set(x, i, p.strokeColor)
 		p.img.Set((x + width), i, p.strokeColor)
-	}
-}
-
-func (p *Processing) fillRect(x, y, width, height int) {
-	for i := x; i < (width + x); i++ {
-		for j := y; j < (height + y); j++ {
-			p.img.Set(i, j, p.fillColor)
-		}
 	}
 }
 
@@ -88,15 +88,6 @@ func (p *Processing) Circle(x, y, extent int) {
 	}
 }
 
-func (p *Processing) noFillPie(x, y, extent int, startAngle, endAngle float64) {
-	r := float64(extent / 2)
-	for ang := startAngle; ang < endAngle; ang += 0.1 {
-		i := int(float64(x) + r*math.Cos(ang*math.Pi/180))
-		j := int(float64(y) + r*math.Sin(ang*math.Pi/180))
-		p.img.Set(i, j, p.strokeColor)
-	}
-}
-
 func (p *Processing) fillPie(x, y, extent int, startAngle, endAngle float64) {
 	for ang := startAngle; ang < endAngle; ang += 0.1 {
 		for r := 0.0; r < float64(extent/2); r++ {
@@ -104,5 +95,14 @@ func (p *Processing) fillPie(x, y, extent int, startAngle, endAngle float64) {
 			j := int(float64(y) + r*math.Sin(ang*math.Pi/180))
 			p.img.Set(i, j, p.fillColor)
 		}
+	}
+}
+
+func (p *Processing) noFillPie(x, y, extent int, startAngle, endAngle float64) {
+	r := float64(extent / 2)
+	for ang := startAngle; ang < endAngle; ang += 0.1 {
+		i := int(float64(x) + r*math.Cos(ang*math.Pi/180))
+		j := int(float64(y) + r*math.Sin(ang*math.Pi/180))
+		p.img.Set(i, j, p.strokeColor)
 	}
 }
