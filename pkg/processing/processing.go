@@ -42,6 +42,46 @@ func (p *Processing) NoStroke() {
 	p.strokeColor = nil
 }
 
+func (p *Processing) Line(startX, startY, endX, endY int) {
+	sx := float64(startX)
+	sy := float64(startY)
+	ex := float64(endX)
+	ey := float64(endY)
+
+	dx := math.Abs(ex - sx)
+	dy := math.Abs(ey - sy)
+
+	swx := 1.0
+	if sx >= ex {
+		swx = -1
+	}
+	swy := 1.0
+	if sy >= ey {
+		swy = -1
+	}
+
+	e := dx - dy
+
+	x := sx
+	y := sy
+	for {
+		p.img.Set(int(x), int(y), p.strokeColor)
+		if x == ex && y == ey {
+			return
+		}
+
+		e2 := 2 * e
+		if e2 > -dy {
+			e = e - dy
+			x = x + swx
+		}
+		if e2 < dx {
+			e = e + dx
+			y = y + swy
+		}
+	}
+}
+
 func (p *Processing) Rect(x, y, width, height int) {
 	if p.fillColor != nil {
 		p.fillRect(x, y, width, height)
