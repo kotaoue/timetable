@@ -35,7 +35,12 @@ func Main() error {
 	hours := 24
 	ang := 360 / hours
 	for i := 0; i < hours; i++ {
-		prc.Fill(&color.RGBA{uint8(255 / (i + 1)), 255, 255, 255})
+		if i%2 == 0 {
+			prc.Fill(&color.RGBA{255, 0, 0, 255})
+		} else {
+			prc.Fill(&color.RGBA{0, 0, 255, 255})
+		}
+
 		fmt.Printf("i:%d start:%g end:%g\n", i, float64(i*ang), float64((i+1)*ang))
 		prc.Pie((width / 2), (height / 2), size, float64(i*ang), float64((i+1)*ang))
 	}
