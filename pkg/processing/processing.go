@@ -145,4 +145,17 @@ func (p *Processing) noFillPie(x, y, extent int, startAngle, endAngle float64) {
 		j := int(float64(y) + r*math.Sin(ang*math.Pi/180))
 		p.img.Set(i, j, p.strokeColor)
 	}
+
+	if startAngle != 0 && endAngle != 360 {
+		{
+			i := int(float64(x) + r*math.Cos(startAngle*math.Pi/180))
+			j := int(float64(y) + r*math.Sin(startAngle*math.Pi/180))
+			p.Line(x, y, i, j)
+		}
+		{
+			i := int(float64(x) + r*math.Cos(endAngle*math.Pi/180))
+			j := int(float64(y) + r*math.Sin(endAngle*math.Pi/180))
+			p.Line(x, y, i, j)
+		}
+	}
 }
