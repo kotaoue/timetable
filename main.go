@@ -9,6 +9,7 @@ import (
 	"os"
 
 	"github.com/kotaoue/timetable/pkg/processing"
+	"github.com/kotaoue/timetable/pkg/processing/palettes"
 )
 
 func main() {
@@ -19,6 +20,8 @@ func main() {
 }
 
 func Main() error {
+	palette := palettes.ShadeGreen
+
 	width := 400
 	height := 400
 	size := int(math.Max(float64(width), float64(height)) / 2)
@@ -29,17 +32,13 @@ func Main() error {
 	prc.Fill(&color.RGBA{255, 255, 255, 255})
 	prc.Rect(0, 0, width, height)
 
-	prc.Stroke(&color.RGBA{0, 0, 0, 255})
+	prc.Stroke(&palette[0])
 	prc.Circle((width / 2), (height / 2), size)
 
 	hours := 24
 	ang := 360 / hours
 	for i := 0; i < hours; i++ {
-		if i%2 == 0 {
-			prc.Fill(&color.RGBA{255, 0, 0, 255})
-		} else {
-			prc.Fill(&color.RGBA{0, 0, 255, 255})
-		}
+		prc.Fill(&palette[i%4])
 
 		fmt.Printf("i:%d start:%g end:%g\n", i, float64(i*ang), float64((i+1)*ang))
 		prc.Pie((width / 2), (height / 2), size, float64(i*ang), float64((i+1)*ang))
