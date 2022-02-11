@@ -30,26 +30,12 @@ func main() {
 }
 
 func Main() error {
-	palette := palettes.ShadeGreen
-
-	size := int(math.Max(float64(*width), float64(*height)) / 2)
-
 	img := image.NewRGBA(image.Rectangle{image.Point{0, 0}, image.Point{*width, *height}})
 	prc := processing.NewProcessing(processing.Config{Image: img})
 
-	prc.Fill(&color.RGBA{255, 255, 255, 255})
-	prc.Rect(0, 0, *width, *height)
-
-	prc.Stroke(&palette[0])
-
-	hours := 24
-	ang := 360 / hours
-	for i := 0; i < hours; i++ {
-		prc.Fill(&palette[i%4])
-
-		fmt.Printf("i:%d start:%g end:%g\n", i, float64(i*ang), float64((i+1)*ang))
-		prc.Pie((*width / 2), (*height / 2), size, float64(i*ang), float64((i+1)*ang))
-	}
+	palette := palettes.ShadeGreen
+	drawBG(prc, palette[4])
+	drawTimeTable(prc, palette[:])
 
 	f, err := os.Create("image.png")
 	if err != nil {
@@ -57,4 +43,20 @@ func Main() error {
 	}
 
 	return png.Encode(f, img)
+}
+
+func drawBG(prc *processing.Processing, c color.RGBA) {
+	bColor := palettes.MixWhite(c, 4)
+	prc.Fill(&bColor)
+	prc.Rect(0, 0, *width, *height)
+}
+
+func drawTimeTable(prc *processing.Processing, palette []color.RGBA) {
+	hours := 24
+	ang := 360 / hours
+	size := int(math.Max(float64(*width), float64(*height)) / 2)
+	for i := 0; i < hours; i++ {
+		prc.Fill(&palette[i%4])
+		prc.Pie((*width / 2), (*height / 2), size, float64(i*ang), float64((i+1)*ang))
+	}
 }
