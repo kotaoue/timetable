@@ -54,7 +54,7 @@ func drawBG(prc *processing.Processing, c color.RGBA) {
 func drawTimeTable(prc *processing.Processing, palette []color.RGBA) {
 	hours := 24
 	ang := 360 / hours
-	size := int(math.Max(float64(*width), float64(*height)) / 2)
+	size := int(math.Max(float64(*width), float64(*height)) * 0.75)
 	for i := 0; i < hours; i++ {
 		prc.Fill(&palette[i%4])
 		prc.Pie((*width / 2), (*height / 2), size, float64(i*ang), float64((i+1)*ang))
