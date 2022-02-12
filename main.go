@@ -11,6 +11,9 @@ import (
 
 	"github.com/kotaoue/timetable/pkg/processing"
 	"github.com/kotaoue/timetable/pkg/processing/palettes"
+	"golang.org/x/image/font"
+	"golang.org/x/image/font/basicfont"
+	"golang.org/x/image/math/fixed"
 )
 
 var (
@@ -36,6 +39,7 @@ func Main() error {
 	palette := palettes.ShadeGreen
 	drawBG(prc, palette[4])
 	drawTimeTable(prc, palette[:])
+	drawString(img, 20, 30, "Time Table")
 
 	f, err := os.Create("image.png")
 	if err != nil {
@@ -59,4 +63,17 @@ func drawTimeTable(prc *processing.Processing, palette []color.RGBA) {
 		prc.Fill(&palette[i%4])
 		prc.Pie((*width / 2), (*height / 2), size, float64(i*ang), float64((i+1)*ang))
 	}
+}
+
+func drawString(img *image.RGBA, x, y int, s string) {
+	col := color.RGBA{0, 0, 0, 255}
+	point := fixed.Point26_6{X: fixed.Int26_6(x * 64), Y: fixed.Int26_6(y * 64)}
+
+	d := &font.Drawer{
+		Dst:  img,
+		Src:  image.NewUniform(col),
+		Face: basicfont.Face7x13,
+		Dot:  point,
+	}
+	d.DrawString(s)
 }
