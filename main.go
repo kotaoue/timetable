@@ -6,23 +6,44 @@ import (
 	"image"
 	"image/color"
 	"image/png"
+	"io/ioutil"
 	"math"
 	"os"
 
+	"github.com/golang/freetype/truetype"
 	"github.com/kotaoue/timetable/pkg/processing"
 	"github.com/kotaoue/timetable/pkg/processing/palettes"
 	"golang.org/x/image/font"
-	"golang.org/x/image/font/basicfont"
 	"golang.org/x/image/math/fixed"
 )
 
 var (
-	width  = flag.Int("w", 400, "image width")
-	height = flag.Int("h", 400, "image height")
+	width    = flag.Int("w", 400, "image width")
+	height   = flag.Int("h", 400, "image height")
+	fontFile *truetype.Font
 )
 
 func init() {
 	flag.Parse()
+
+	if err := initFont(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func initFont() error {
+	ftBinary, err := ioutil.ReadFile("Koruri-Regular.ttf")
+	if err != nil {
+		return err
+	}
+
+	fontFile, err = truetype.Parse(ftBinary)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func main() {
@@ -39,7 +60,7 @@ func Main() error {
 	palette := palettes.ShadeGreen
 	drawBG(prc, palette[4])
 	drawTimeTable(prc, palette[:])
-	drawString(img, 20, 30, "Time Table")
+	drawString(img, 20, 30, "タイムテーブル")
 
 	f, err := os.Create("image.png")
 	if err != nil {
@@ -65,15 +86,24 @@ func drawTimeTable(prc *processing.Processing, palette []color.RGBA) {
 	}
 }
 
-func drawString(img *image.RGBA, x, y int, s string) {
+func drawString(img *image.RGBA, x, y int, s string) error {
+	face := truetype.NewFace(
+		fontFile,
+		&truetype.Options{
+			Size: 10,
+		},
+	)
+
 	col := color.RGBA{0, 0, 0, 255}
 	point := fixed.Point26_6{X: fixed.Int26_6(x * 64), Y: fixed.Int26_6(y * 64)}
 
 	d := &font.Drawer{
 		Dst:  img,
 		Src:  image.NewUniform(col),
-		Face: basicfont.Face7x13,
+		Face: face,
 		Dot:  point,
 	}
 	d.DrawString(s)
+
+	return nil
 }
