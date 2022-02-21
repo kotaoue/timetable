@@ -60,7 +60,10 @@ func Main() error {
 	palette := palettes.ShadeGreen
 	drawBG(prc, palette[4])
 	drawTimeTable(prc, palette[:])
-	drawString(img, 20, 30, "タイムテーブル")
+
+	opt := &truetype.Options{Size: 10}
+	drawString(img, 20, 30, "タイムテーブル", opt)
+	drawString(img, 20, 45, "タイムテーブル", opt)
 
 	f, err := os.Create("image.png")
 	if err != nil {
@@ -86,13 +89,8 @@ func drawTimeTable(prc *processing.Processing, palette []color.RGBA) {
 	}
 }
 
-func drawString(img *image.RGBA, x, y int, s string) error {
-	face := truetype.NewFace(
-		fontFile,
-		&truetype.Options{
-			Size: 10,
-		},
-	)
+func drawString(img *image.RGBA, x, y int, s string, opt *truetype.Options) error {
+	face := truetype.NewFace(fontFile, opt)
 
 	col := color.RGBA{0, 0, 0, 255}
 	point := fixed.Point26_6{X: fixed.Int26_6(x * 64), Y: fixed.Int26_6(y * 64)}
