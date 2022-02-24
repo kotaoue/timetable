@@ -62,8 +62,9 @@ func Main() error {
 	drawTimeTable(prc, palette[:])
 
 	opt := &truetype.Options{Size: 10}
-	drawString(img, 20, 30, "タイムテーブル", opt)
-	drawString(img, 20, 45, "タイムテーブル", opt)
+	for k, s := range []string{"タイムテーブル", "Line1", "Line2", "Line3", "Line4"} {
+		drawString(img, 20, 30+(15*k), s, opt)
+	}
 
 	f, err := os.Create("image.png")
 	if err != nil {
