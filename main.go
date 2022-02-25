@@ -63,7 +63,7 @@ func Main() error {
 
 	opt := &truetype.Options{Size: 10}
 	for k, s := range []string{"タイムテーブル", "Line1", "Line2", "Line3", "Line4"} {
-		drawString(img, 20, 30+(15*k), s, opt)
+		drawString(img, 15, 15+(15*k), s, opt)
 	}
 
 	f, err := os.Create("image.png")
