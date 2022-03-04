@@ -63,7 +63,7 @@ func Main() error {
 
 	opt := &truetype.Options{Size: 10}
 	for k, s := range []string{"タイムテーブル", "Line1", "Line2", "Line3", "Line4"} {
-		drawString(img, 15, 15+(15*k), s, opt)
+		drawString(img, 15, 15+(15*k), s, opt, palette[1])
 	}
 
 	f, err := os.Create("image.png")
@@ -90,15 +90,14 @@ func drawTimeTable(prc *processing.Processing, palette []color.RGBA) {
 	}
 }
 
-func drawString(img *image.RGBA, x, y int, s string, opt *truetype.Options) error {
+func drawString(img *image.RGBA, x, y int, s string, opt *truetype.Options, c color.RGBA) error {
 	face := truetype.NewFace(fontFile, opt)
 
-	col := color.RGBA{0, 0, 0, 255}
 	point := fixed.Point26_6{X: fixed.Int26_6(x * 64), Y: fixed.Int26_6(y * 64)}
 
 	d := &font.Drawer{
 		Dst:  img,
-		Src:  image.NewUniform(col),
+		Src:  image.NewUniform(c),
 		Face: face,
 		Dot:  point,
 	}
