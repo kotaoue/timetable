@@ -11,8 +11,8 @@ import (
 	"os"
 
 	"github.com/golang/freetype/truetype"
+	"github.com/kotaoue/timetable/pkg/palettes"
 	"github.com/kotaoue/timetable/pkg/processing"
-	"github.com/kotaoue/timetable/pkg/processing/palettes"
 	"golang.org/x/image/font"
 	"golang.org/x/image/math/fixed"
 )
