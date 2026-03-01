@@ -1,20 +1,10 @@
 # timetable
+
 Create daily pie chart image.
 
 A Go program that creates pie chart images.
 
 ## Sample Output
-
-```mermaid
-pie
-    title Daily Time Allocation
-    "Sleep" : 8
-    "Work" : 8
-    "Leisure" : 4
-    "Meals" : 2
-    "Exercise" : 1
-    "Other" : 1
-```
 
 ![timetable sample](image.png)
 
@@ -46,10 +36,12 @@ The output file `image.png` will be created in the current directory.
 | `-h` | `400`   | Image height (px) |
 
 ## Next
+
 Change the implementation plan from self-made to existing.
 Next repository is [kotaoue/pieimg](https://github.com/kotaoue/pieimg)
 
 ## References
+
 * [Koruri](https://koruri.github.io/)
 * [Adobe Color](https://color.adobe.com/ja/create/color-wheel)
 * [mermaid](https://mermaid-js.github.io/mermaid/#/)
