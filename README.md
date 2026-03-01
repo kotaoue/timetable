@@ -1,9 +1,20 @@
 # timetable
 Create daily pie chart image.
 
-A Go program that generates a 400×400 (by default) PNG image divided into 24 equal slices — one for each hour of the day — rendered in a shaded green palette.
+A Go program that creates pie chart images.
 
 ## Sample Output
+
+```mermaid
+pie
+    title Daily Time Allocation
+    "Sleep" : 8
+    "Work" : 8
+    "Leisure" : 4
+    "Meals" : 2
+    "Exercise" : 1
+    "Other" : 1
+```
 
 ![timetable sample](image.png)
 
