@@ -1,9 +1,43 @@
 # timetable
 Create daily pie chart image.
 
+A Go program that generates a 400×400 (by default) PNG image divided into 24 equal slices — one for each hour of the day — rendered in a shaded green palette.
+
+## Sample Output
+
+![timetable sample](image.png)
+
+## Requirements
+
+* Go 1.17+
+* [Koruri-Regular.ttf](https://koruri.github.io/) placed in the working directory
+
+## Usage
+
+```sh
+# Build
+go build -o timetable .
+
+# Run with default size (400×400)
+./timetable
+
+# Run with custom size
+./timetable -w 600 -h 600
+```
+
+The output file `image.png` will be created in the current directory.
+
+### Flags
+
+| Flag | Default | Description       |
+|------|---------|-------------------|
+| `-w` | `400`   | Image width (px)  |
+| `-h` | `400`   | Image height (px) |
+
 ## Next
 Change the implementation plan from self-made to existing.
 Next repository is [kotaoue/pieimg](https://github.com/kotaoue/pieimg)
+
 ## References
 * [Koruri](https://koruri.github.io/)
 * [Adobe Color](https://color.adobe.com/ja/create/color-wheel)
