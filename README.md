@@ -11,7 +11,17 @@ A Go program that creates pie chart images.
 ## Requirements
 
 * Go 1.17+
-* [Koruri-Regular.ttf](https://koruri.github.io/) placed in the working directory
+
+## Prerequisites
+
+1. Download [Koruri-Regular.ttf](https://koruri.github.io/).
+2. Place `Koruri-Regular.ttf` in the project root (same directory as `main.go`).
+
+If it is missing, you may see:
+
+```text
+open Koruri-Regular.ttf: no such file or directory
+```
 
 ## Usage
 
