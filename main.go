@@ -18,10 +18,13 @@ import (
 )
 
 var (
-	width    = flag.Int("w", 400, "image width")
-	height   = flag.Int("h", 400, "image height")
-	fontFile *truetype.Font
+	width      = flag.Int("w", 400, "image width")
+	height     = flag.Int("h", 400, "image height")
+	outputFile = flag.String("o", "image.png", "output file path")
+	fontFile   *truetype.Font
 )
+
+var defaultLabels = []string{"タイムテーブル", "Line1", "Line2", "Line3", "Line4"}
 
 func init() {
 	flag.Parse()
@@ -61,12 +64,17 @@ func Main() error {
 	drawBG(prc, palette[4])
 	drawTimeTable(prc, palette[:])
 
+	labels := flag.Args()
+	if len(labels) == 0 {
+		labels = defaultLabels
+	}
+
 	opt := &truetype.Options{Size: 10}
-	for k, s := range []string{"タイムテーブル", "Line1", "Line2", "Line3", "Line4"} {
+	for k, s := range labels {
 		drawString(img, 15, 15+(15*k), s, opt, palette[1])
 	}
 
-	f, err := os.Create("image.png")
+	f, err := os.Create(*outputFile)
 	if err != nil {
 		return err
 	}
