@@ -15,3 +15,6 @@
 # vendor/
 *.ttf
 .DS_Store
+
+# Ignore the build results
+timetable
