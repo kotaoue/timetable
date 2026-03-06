@@ -29,21 +29,36 @@ open Koruri-Regular.ttf: no such file or directory
 # Build
 go build -o timetable .
 
-# Run with default size (400×400)
+# Run with default size (400×400) and default labels
 ./timetable
 
 # Run with custom size
 ./timetable -w 600 -h 600
+
+# Run with custom output file
+./timetable -o output.png
+
+# Run with custom labels (positional arguments)
+./timetable "マイタイムテーブル" "朝" "昼" "夕" "夜"
+
+# Combine flags and labels
+./timetable -w 600 -h 600 -o custom.png "タイトル" "ラベル1" "ラベル2"
 ```
 
-The output file `image.png` will be created in the current directory.
+The output file `image.png` will be created in the current directory (unless `-o` is specified).
 
 ### Flags
 
-| Flag | Default | Description       |
-|------|---------|-------------------|
-| `-w` | `400`   | Image width (px)  |
-| `-h` | `400`   | Image height (px) |
+| Flag | Default      | Description                                               |
+|------|--------------|-----------------------------------------------------------|
+| `-w` | `400`        | Image width (px)                                          |
+| `-h` | `400`        | Image height (px)                                         |
+| `-o` | `image.png`  | Output file path                                          |
+
+### Labels
+
+Any positional arguments after the flags are used as labels drawn on the image.
+If no labels are provided, the defaults `["タイムテーブル", "Line1", "Line2", "Line3", "Line4"]` are used.
 
 ## Next
 
